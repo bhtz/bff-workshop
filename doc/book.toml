@@ -6,4 +6,4 @@ src = "resources"
 title = "BFF workshop"
 
 [build]
-build-dir = "wwwroot"
+build-dir = "../wwwroot"
