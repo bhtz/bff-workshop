@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="definition.html">Definition</a></li><li class="chapter-item expanded affix "><a href="specification.html">Specification</a></li><li class="chapter-item expanded affix "><a href="installation.html">Installation</a></li><li class="chapter-item expanded affix "><a href="roadmap.html">Roadmap</a></li><li class="chapter-item expanded affix "><li class="part-title">Stacks</li><li class="chapter-item expanded "><a href="technos/blazor.html"><strong aria-hidden="true">1.</strong> Blazor</a></li><li class="chapter-item expanded "><a href="technos/angular.html"><strong aria-hidden="true">2.</strong> Angular</a></li><li class="chapter-item expanded "><a href="technos/nextjs.html"><strong aria-hidden="true">3.</strong> Nextjs</a></li><li class="chapter-item expanded "><a href="technos/nuxt.html"><strong aria-hidden="true">4.</strong> Nuxt</a></li><li class="chapter-item expanded "><a href="technos/yew.html"><strong aria-hidden="true">5.</strong> Yew</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="definition.html">Definition</a></li><li class="chapter-item expanded affix "><a href="specification.html">Specification</a></li><li class="chapter-item expanded affix "><a href="roadmap.html">Roadmap</a></li><li class="chapter-item expanded affix "><a href="contributing.html">Contributing</a></li><li class="chapter-item expanded affix "><li class="part-title">Stacks</li><li class="chapter-item expanded "><a href="technos/blazor.html"><strong aria-hidden="true">1.</strong> Blazor</a></li><li class="chapter-item expanded "><a href="technos/angular.html"><strong aria-hidden="true">2.</strong> Angular</a></li><li class="chapter-item expanded "><a href="technos/nextjs.html"><strong aria-hidden="true">3.</strong> Nextjs</a></li><li class="chapter-item expanded "><a href="technos/nuxt.html"><strong aria-hidden="true">4.</strong> Nuxt</a></li><li class="chapter-item expanded "><a href="technos/yew.html"><strong aria-hidden="true">5.</strong> Yew</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -184,7 +184,7 @@
 <p><img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/21_Angular_logo_logos-512.png" width="25"> Express - Angular <br></p>
 <p><img src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png" width="25"> Nextjs - React <br></p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Nuxt_logo.svg/2560px-Nuxt_logo.svg.png" width="25"> Nuxt - Vue <br></p>
-<p><img src="https://yew.rs/img/logo.svg" width="25"> Yew - Actix (coming) <br></p>
+<p><img src="https://yew.rs/img/logo.svg" width="25"> Actix - Yew (coming soon ...) <br></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bff-backend-for-frontend"><a class="header" href="#bff-backend-for-frontend">BFF (Backend For Frontend):</a></h1>
 <p>BFF, short for Backend For Frontend, is a software architectural pattern used in the development of web applications. It involves the creation of dedicated backend services tailored to specific frontend applications or client devices. The primary purpose of a BFF is to optimize the communication between the frontend and backend components by providing tailored endpoints and data structures that precisely match the requirements of the frontend application.</p>
 <p><strong>Key Features</strong>:</p>
@@ -285,40 +285,6 @@
 <ul>
 <li>I18N switcher : FR &amp; EN</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
-<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
-<ul>
-<li>node 18+ SDK</li>
-<li>dotnet 8 SDK</li>
-<li>docker engine</li>
-</ul>
-<h2 id="building-documentation"><a class="header" href="#building-documentation">Building documentation</a></h2>
-<blockquote>
-<p>Open documentation using mdbook</p>
-</blockquote>
-<pre><code class="language-console">cd ./doc
-mdbook serve -p 5555
-</code></pre>
-<h2 id="iac"><a class="header" href="#iac">IAC</a></h2>
-<pre><code class="language-console">cd ./IAC
-docker-compose up
-</code></pre>
-<h2 id="blazor"><a class="header" href="#blazor">Blazor</a></h2>
-<pre><code class="language-console">cd ./src/blazor/Microscope.Boilerplate.Clients.BFF
-dotnet run
-</code></pre>
-<h2 id="angular"><a class="header" href="#angular">Angular</a></h2>
-<pre><code class="language-console">cd ./src/angular
-npm run dev
-</code></pre>
-<h2 id="nuxt"><a class="header" href="#nuxt">Nuxt</a></h2>
-<pre><code class="language-console">cd ./src/nuxt
-npm run dev
-</code></pre>
-<h2 id="nextjs"><a class="header" href="#nextjs">Nextjs</a></h2>
-<pre><code class="language-console">cd ./src/next
-npm run dev
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="roadmap"><a class="header" href="#roadmap">Roadmap</a></h1>
 <h3 id="aspnet---blazor"><a class="header" href="#aspnet---blazor">ASP.NET - Blazor</a></h3>
 <ul>
@@ -380,6 +346,40 @@ npm run dev
 <li>🚫 Light / Dark theme</li>
 <li>🚫 I18N</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<ul>
+<li>node 18+ SDK</li>
+<li>dotnet 8 SDK</li>
+<li>docker engine</li>
+</ul>
+<h2 id="building-documentation"><a class="header" href="#building-documentation">Building documentation</a></h2>
+<blockquote>
+<p>Open documentation using mdbook</p>
+</blockquote>
+<pre><code class="language-console">cd ./doc
+mdbook serve -p 5555
+</code></pre>
+<h2 id="iac"><a class="header" href="#iac">IAC</a></h2>
+<pre><code class="language-console">cd ./IAC
+docker-compose up
+</code></pre>
+<h2 id="blazor"><a class="header" href="#blazor">Blazor</a></h2>
+<pre><code class="language-console">cd ./src/blazor/Microscope.Boilerplate.Clients.BFF
+dotnet run
+</code></pre>
+<h2 id="angular"><a class="header" href="#angular">Angular</a></h2>
+<pre><code class="language-console">cd ./src/angular
+npm run dev
+</code></pre>
+<h2 id="nuxt"><a class="header" href="#nuxt">Nuxt</a></h2>
+<pre><code class="language-console">cd ./src/nuxt
+npm run dev
+</code></pre>
+<h2 id="nextjs"><a class="header" href="#nextjs">Nextjs</a></h2>
+<pre><code class="language-console">cd ./src/next
+npm run dev
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="blazor-1"><a class="header" href="#blazor-1">Blazor</a></h1>
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" width="40">
 <blockquote>

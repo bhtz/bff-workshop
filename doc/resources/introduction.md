@@ -14,5 +14,4 @@
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Nuxt_logo.svg/2560px-Nuxt_logo.svg.png" width="25"> Nuxt - Vue <br>
 
-<img src="https://yew.rs/img/logo.svg" width="25"> Yew - Actix (coming) <br>
-
+<img src="https://yew.rs/img/logo.svg" width="25"> Actix - Yew (coming soon ...) <br>

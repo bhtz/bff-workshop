@@ -2,8 +2,8 @@
 [Introduction](./introduction.md)
 [Definition](./definition.md)
 [Specification](./specification.md)
-[Installation](./installation.md)
 [Roadmap](./roadmap.md)
+[Contributing](./contributing.md)
 
 # Stacks
 - [Blazor](./technos/blazor.md)
