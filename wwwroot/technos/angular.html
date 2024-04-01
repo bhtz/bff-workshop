@@ -184,6 +184,146 @@
 </ul>
 <p><img src="../public/angular.png" alt="../public/angular.png" /></p>
 <h2 id="features"><a class="header" href="#features">Features</a></h2>
+<h2 id="material-ui"><a class="header" href="#material-ui">Material UI</a></h2>
+<ul>
+<li>Add material UI design system
+<ul>
+<li>color primary by techno</li>
+<li>layout with app bar &amp; collapsable sidemenu to rail</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Easy intergration using <a href="https://material.angular.io/">&quot;@angular/material&quot;</a> package</p>
+</blockquote>
+<pre><code class="language-html">&lt;mat-toolbar color=&quot;primary&quot;&gt;
+  &lt;mat-icon style=&quot;cursor: pointer;&quot; (click)=&quot;toggle()&quot; aria-hidden=&quot;false&quot; aria-label=&quot;Example home icon&quot; fontIcon=&quot;menu&quot;&gt;&lt;/mat-icon&gt;
+  &lt;span style=&quot;margin-left: 10px; font-weight: normal; font-size: medium;&quot;&gt;Microscope.Boilerplate.Angular&lt;/span&gt;
+  &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+  
+  &lt;button *ngIf=&quot;!isAuthenticated&quot; mat-icon-button (click)=&quot;login()&quot;&gt;
+    &lt;mat-icon&gt;account_circle&lt;/mat-icon&gt;
+  &lt;/button&gt;
+
+  &lt;button *ngIf=&quot;isAuthenticated&quot; mat-button [matMenuTriggerFor]=&quot;menu&quot;&gt;AD&lt;/button&gt;
+  &lt;mat-menu #menu=&quot;matMenu&quot;&gt;
+    &lt;button mat-menu-item (click)=&quot;goToAccount()&quot;&gt;Account&lt;/button&gt;
+    &lt;button mat-menu-item (click)=&quot;logout()&quot;&gt;Logout&lt;/button&gt;
+  &lt;/mat-menu&gt;
+
+&lt;/mat-toolbar&gt;
+
+&lt;mat-sidenav-container class=&quot;sidenav-container&quot;&gt;
+  &lt;mat-sidenav class=&quot;sidenav&quot; mode=&quot;side&quot; [(opened)]=&quot;opened&quot; &gt;
+    &lt;mat-nav-list&gt;
+      &lt;mat-list-item routerLink=&quot;/&quot; routerLinkActive=&quot;active&quot;&gt;&lt;mat-icon class=&quot;v-align&quot; fontIcon=&quot;home&quot;&gt;&lt;/mat-icon&gt;&lt;span&gt;Home&lt;/span&gt;&lt;/mat-list-item&gt;
+      &lt;mat-list-item routerLink=&quot;/counter&quot; routerLinkActive=&quot;active&quot;&gt;&lt;mat-icon class=&quot;v-align&quot; fontIcon=&quot;add&quot;&gt;&lt;/mat-icon&gt;&lt;span&gt;Counter&lt;/span&gt;&lt;/mat-list-item&gt;
+      &lt;mat-list-item routerLink=&quot;/posts&quot; routerLinkActive=&quot;active&quot;&gt;&lt;mat-icon class=&quot;v-align&quot; fontIcon=&quot;list&quot;&gt;&lt;/mat-icon&gt;&lt;span&gt;Posts&lt;/span&gt;&lt;/mat-list-item&gt;
+      &lt;mat-list-item routerLink=&quot;/user&quot; routerLinkActive=&quot;active&quot;&gt;&lt;mat-icon class=&quot;v-align&quot; fontIcon=&quot;verified_user&quot;&gt;&lt;/mat-icon&gt;&lt;span&gt;User&lt;/span&gt;&lt;/mat-list-item&gt;
+    &lt;/mat-nav-list&gt;
+  &lt;/mat-sidenav&gt;
+  &lt;mat-sidenav-content class=&quot;sidenav-content&quot;&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt;
+  &lt;/mat-sidenav-content&gt;
+&lt;/mat-sidenav-container&gt;
+</code></pre>
+<pre><code class="language-js">export class AppComponent implements OnInit {
+    public opened: boolean = true;
+    // ..
+    toggle() {
+        this.opened = !this.opened;
+    }
+    // ..
+}
+</code></pre>
+<h2 id="custom-endpoint"><a class="header" href="#custom-endpoint">Custom endpoint</a></h2>
+<blockquote>
+<p>💡 Expose custom server endpoint to &quot;/version&quot; using a express API endpoint</p>
+</blockquote>
+<pre><code class="language-js">server.get('/version', (req, res) =&gt; {
+    res.json({ version: '1.0.0' })
+})
+</code></pre>
+<h2 id="server-side-rendering"><a class="header" href="#server-side-rendering">Server side rendering</a></h2>
+<ul>
+<li>Expose frontend web application with SSR
+<ul>
+<li>pre-rendering page with data</li>
+<li>fallback into interactive UI</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Let angular universal handle the magic : </p>
+</blockquote>
+<p><strong>server.ts</strong></p>
+<pre><code class="language-js">  import { CommonEngine } from '@angular/ssr';
+
+  // All regular routes use the Angular engine
+  server.get('*', (req, res, next) =&gt; {
+    const { protocol, originalUrl, baseUrl, headers } = req;
+
+    commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: indexHtml,
+        url: `${protocol}://${headers.host}${originalUrl}`,
+        publicPath: browserDistFolder,
+        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+      })
+      .then((html) =&gt; res.send(html))
+      .catch((err) =&gt; next(err));
+  });
+</code></pre>
+<h2 id="oidc--cookie-authentication"><a class="header" href="#oidc--cookie-authentication">OIDC &amp; cookie authentication</a></h2>
+<ul>
+<li>Handle OIDC auth over keycloak SSO</li>
+<li>Cookie &amp; antiforgery token</li>
+<li>Login / Logout clean process</li>
+</ul>
+<blockquote>
+<p>💡 Using angular-oauth2-oidc package for angular authentication</p>
+</blockquote>
+<blockquote>
+<p>🚨 Authentication is handle here client side &amp; secret token is in the browser ... to improve</p>
+</blockquote>
+<p><strong>oidc.service.ts</strong></p>
+<pre><code class="language-js">import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class AuthService {
+    private oAuthService = inject(OAuthService);
+    private router = inject(Router);
+
+    constructor() {
+        this.initConfiguration();
+    }
+
+    initConfiguration() {
+        const authConfig: AuthConfig = {
+            issuer: 'http://localhost:8083/realms/microscope/',
+            clientId: 'boilerplate',
+            dummyClientSecret: 'JxaXjmKOd08cMpaKrThAObUzeOmyRiLN',
+            scope: 'roles',
+            responseType: 'code',
+            redirectUri: 'http://localhost:4200/',
+            strictDiscoveryDocumentValidation: false,
+            skipIssuerCheck: true
+        };
+
+        this.oAuthService.configure(authConfig);
+        this.oAuthService.setupAutomaticSilentRefresh();
+        this.oAuthService.loadDiscoveryDocumentAndTryLogin();
+    }
+
+    login() {
+        this.oAuthService.initLoginFlow();
+    }
+    // ..
+}
+</code></pre>
 
                     </main>
 

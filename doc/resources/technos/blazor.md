@@ -13,10 +13,10 @@
 
 ## Material UI
 * Add material UI design system
-    * Fluid implementation using [MudBlazor](https://mudblazor.com/). Excellent DX !
-    * Layout with app bar & collapsable sidemenu to rail
+    * color primary by techno
+    * layout with app bar & collapsable sidemenu to rail
 
-> 💡 Easy intergration thx to mudblazor
+> 💡 Easy intergration using [MudBlazor](https://mudblazor.com/). Excellent DX !
 
 ```c#
 <MudLayout>
