@@ -7,7 +7,7 @@
     * color primary by techno
     * layout with app bar & collapsable sidemenu to rail
 
-## Version endpoint
+## Custom endpoint
 * Expose custom server endpoint to "/version"
     * return { version: "1.0.0" }
 
