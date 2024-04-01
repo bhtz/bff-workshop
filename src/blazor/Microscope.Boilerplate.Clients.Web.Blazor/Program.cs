@@ -11,7 +11,6 @@ var baseAddress = builder.HostEnvironment.BaseAddress;
 builder.Services.AddScoped<HostingEnvironmentService>();
 builder.Services.AddScoped<ClientAuthenticationHeaderHandler>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
-// builder.Services.AddBFFClient().ConfigureHttpClient(client => client.BaseAddress = new Uri(baseAddress));
 builder.Services.AddBFFClient().ConfigureHttpClient(
     client => client.BaseAddress = new Uri(baseAddress + "graphql"),
     clientBuilder => clientBuilder.AddHttpMessageHandler<ClientAuthenticationHeaderHandler>());

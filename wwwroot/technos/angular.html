@@ -324,6 +324,23 @@ export class AuthService {
     // ..
 }
 </code></pre>
+<h2 id="proxying-api"><a class="header" href="#proxying-api">Proxying API</a></h2>
+<ul>
+<li>Proxying downsteam REST API
+<ul>
+<li>Proxying jsonplaceholder &quot;todos&quot; API with route &quot;/api/todos&quot;</li>
+<li><a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using <a href="express-http-proxy">express-http-proxy</a> package</p>
+</blockquote>
+<p><strong>server.ts</strong></p>
+<pre><code class="language-js">import proxy from 'express-http-proxy';
+// ...
+server.use('/api', proxy('https://jsonplaceholder.typicode.com'));
+</code></pre>
 
                     </main>
 

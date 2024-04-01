@@ -603,8 +603,43 @@ builder.AddTypeExtensionsFromFile(&quot;./stitching.graphql&quot;);
 </li>
 </ul>
 <blockquote>
-<p>💡 Using Hotchocolate Strawberry Shake</p>
+<p>💡 Using Hotchocolate <a href="https://chillicream.com/docs/strawberryshake/v13">Strawberry Shake</a></p>
 </blockquote>
+<pre><code class="language-console">cd ./src/blazor/Microscope.Boilerplate.Clients.SDK.GraphQL
+dotnet new tool-manifest
+dotnet tool install StrawberryShake.Tools
+dotnet add package StrawberryShake.Blazor
+dotnet graphql init http://localhost:5215/graphql -n BffClient
+</code></pre>
+<pre><code class="language-graphql">query GetContinents {
+    continents {
+        name
+    }
+}
+</code></pre>
+<pre><code class="language-console">dotnet build
+</code></pre>
+<p>Add SDK reference to Blazor project</p>
+<pre><code class="language-c#">&lt;UseGetContinents Context=&quot;result&quot;&gt;
+    &lt;ChildContent&gt;
+        &lt;MudPaper&gt;
+            &lt;MudList&gt;
+                @foreach (var item in result.Continents)
+                {
+                    &lt;MudListItem Icon=&quot;@Icons.Material.Filled.List&quot;&gt;@item.Name&lt;/MudListItem&gt;
+                }
+            &lt;/MudList&gt;
+        &lt;/MudPaper&gt;
+    &lt;/ChildContent&gt;
+    &lt;ErrorContent&gt;
+        @result.First().Message
+    &lt;/ErrorContent&gt;
+    &lt;LoadingContent&gt;
+        &lt;MudSkeleton SkeletonType=&quot;SkeletonType.Rectangle&quot; Height=&quot;50px&quot; /&gt;
+        &lt;MudSkeleton SkeletonType=&quot;SkeletonType.Rectangle&quot; Height=&quot;50px&quot; Class=&quot;mt-4&quot; /&gt;
+    &lt;/LoadingContent&gt;
+&lt;/UseGetContinents&gt;
+</code></pre>
 <h2 id="light--dark-theme-1"><a class="header" href="#light--dark-theme-1">Light / Dark theme</a></h2>
 <ul>
 <li>Theme switcher implementation</li>
@@ -795,6 +830,23 @@ export class AuthService {
     }
     // ..
 }
+</code></pre>
+<h2 id="proxying-api-2"><a class="header" href="#proxying-api-2">Proxying API</a></h2>
+<ul>
+<li>Proxying downsteam REST API
+<ul>
+<li>Proxying jsonplaceholder &quot;todos&quot; API with route &quot;/api/todos&quot;</li>
+<li><a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using <a href="technos/express-http-proxy">express-http-proxy</a> package</p>
+</blockquote>
+<p><strong>server.ts</strong></p>
+<pre><code class="language-js">import proxy from 'express-http-proxy';
+// ...
+server.use('/api', proxy('https://jsonplaceholder.typicode.com'));
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="next"><a class="header" href="#next">Next</a></h1>
 <img src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png" width="40">

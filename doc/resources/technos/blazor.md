@@ -215,7 +215,51 @@ builder.AddTypeExtensionsFromFile("./stitching.graphql");
     * Auto generate it from BFF url
     * Use it in frontend application
 
-> 💡 Using Hotchocolate Strawberry Shake
+> 💡 Using Hotchocolate [Strawberry Shake](https://chillicream.com/docs/strawberryshake/v13)
+
+```console
+cd ./src/blazor/Microscope.Boilerplate.Clients.SDK.GraphQL
+dotnet new tool-manifest
+dotnet tool install StrawberryShake.Tools
+dotnet add package StrawberryShake.Blazor
+dotnet graphql init http://localhost:5215/graphql -n BffClient
+```
+
+```graphql
+query GetContinents {
+    continents {
+        name
+    }
+}
+```
+
+```console
+dotnet build
+```
+
+Add SDK reference to Blazor project
+
+```c#
+<UseGetContinents Context="result">
+    <ChildContent>
+        <MudPaper>
+            <MudList>
+                @foreach (var item in result.Continents)
+                {
+                    <MudListItem Icon="@Icons.Material.Filled.List">@item.Name</MudListItem>
+                }
+            </MudList>
+        </MudPaper>
+    </ChildContent>
+    <ErrorContent>
+        @result.First().Message
+    </ErrorContent>
+    <LoadingContent>
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="50px" />
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="50px" Class="mt-4" />
+    </LoadingContent>
+</UseGetContinents>
+```
 
 
 ## Light / Dark theme

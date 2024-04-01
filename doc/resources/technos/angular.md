@@ -147,3 +147,17 @@ export class AuthService {
     // ..
 }
 ```
+
+## Proxying API
+* Proxying downsteam REST API
+    * Proxying jsonplaceholder "todos" API with route "/api/todos"
+    * [https://jsonplaceholder.typicode.com/](https://jsonplaceholder.typicode.com/)
+
+> 💡 Using [express-http-proxy](express-http-proxy) package
+
+**server.ts**
+```js
+import proxy from 'express-http-proxy';
+// ...
+server.use('/api', proxy('https://jsonplaceholder.typicode.com'));
+```
