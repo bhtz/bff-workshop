@@ -174,9 +174,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="bff--frontend-workshop"><a class="header" href="#bff--frontend-workshop">BFF / Frontend workshop</a></h1>
-<blockquote>
 <p>Project templates to compare stacks around the BFF &amp; SPA pattern (Backend For Frontend &amp; Single Page Application)</p>
+<blockquote>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/800px-GitHub_Invertocat_Logo.svg.png" width="15"> <a href="https://github.com/bhtz/bff-workshop">Repository Github</a></p>
 </blockquote>
+<h2 id="stacks"><a class="header" href="#stacks">Stacks</a></h2>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" width="25"> ASP NET - Blazor <br></p>
 <p><img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/21_Angular_logo_logos-512.png" width="25"> Express - Angular <br></p>
 <p><img src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png" width="25"> Nextjs - React <br></p>
@@ -206,22 +208,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
