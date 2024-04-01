@@ -3,7 +3,7 @@
 ### ASP.NET - Blazor
 
 * ✅ Material UI
-* ✅ Version endpoint
+* ✅ Custom endpoint
 * ✅ Server side rendering
 * ✅ OIDC / Cookie authentication
 * ✅ Proxying API
@@ -14,7 +14,7 @@
 ### Express - Angular
 
 * ✅ Material UI
-* ✅ Version endpoint
+* ✅ Custom endpoint
 * ✅ Server side rendering
 * 🛠️ OIDC / Cookie authentication
 * ✅ Proxying API
@@ -25,7 +25,7 @@
 ### Nuxt - Vue
 
 * ✅ Material UI
-* ✅ Version endpoint
+* ✅ Custom endpoint
 * ✅ Server side rendering
 * 🛠️ OIDC / Cookie authentication
 * ✅ Proxying API
@@ -36,7 +36,7 @@
 ### Nextjs - React
 
 * 🛠️ Material UI
-* ✅ Version endpoint
+* ✅ Custom endpoint
 * ✅ Server side rendering
 * 🚫 OIDC / Cookie authentication
 * 🛠️ Proxying API
@@ -47,7 +47,7 @@
 ### Yew - Rust (coming)
 
 * 🚫 Material UI
-* 🚫 Version endpoint
+* 🚫 Custom endpoint
 * 🚫 Server side rendering
 * 🚫 OIDC / Cookie authentication
 * 🚫 Proxying API
