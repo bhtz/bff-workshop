@@ -1,6 +1,6 @@
 # BFF / Frontend workshop
 
-Project templates to compare stacks around the BFF & SPA pattern (Backend For Frontend & Single Page Application)
+💡 Project templates to compare stacks around the BFF & SPA pattern (Backend For Frontend & Single Page Application)
 
 > <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/800px-GitHub_Invertocat_Logo.svg.png" width="15"> [Repository Github](https://github.com/bhtz/bff-workshop)
 
