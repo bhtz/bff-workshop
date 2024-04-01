@@ -7,4 +7,6 @@
 - [Web site](https://angular.io/)
 - [Github](https://github.com/angular/angular)
 
+![../public/angular.png](../public/angular.png)
+
 ## Features

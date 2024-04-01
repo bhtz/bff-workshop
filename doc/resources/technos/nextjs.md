@@ -7,4 +7,6 @@
 - [Web site](https://nextjs.org/)
 - [Github](https://github.com/vercel/next.js)
 
+![../public/nextjs.png](../public/nextjs.png)
+
 ## Features

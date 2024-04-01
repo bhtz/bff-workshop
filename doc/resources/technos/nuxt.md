@@ -7,4 +7,6 @@
 - [Web site](https://nuxt.com/)
 - [Github](https://github.com/nuxt/nuxt)
 
+![../public/nuxt.png](../public/nuxt.png)
+
 ## Features

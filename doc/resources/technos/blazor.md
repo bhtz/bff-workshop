@@ -7,6 +7,8 @@
 - [Web site](https://dotnet.microsoft.com/en-us/apps/aspnet)
 - [Github](https://github.com/dotnet/aspnetcore)
 
+![../public/blazor.png](../public/blazor.png)
+
 ## Features
 
 ## Material UI
