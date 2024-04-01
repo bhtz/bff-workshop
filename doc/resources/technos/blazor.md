@@ -210,6 +210,14 @@ builder.AddTypeExtensionsFromFile("./stitching.graphql");
   },
 ```
 
+## Auto generated SDK
+* SDK to consume BFF GraphQL schema
+    * Auto generate it from BFF url
+    * Use it in frontend application
+
+> 💡 Using Hotchocolate Strawberry Shake
+
+
 ## Light / Dark theme
 * Theme switcher implementation
 

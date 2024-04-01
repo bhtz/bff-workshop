@@ -33,6 +33,11 @@
     * [https://countries.trevorblades.com/](https://countries.trevorblades.com/)
     * Page listing continents exposed by API
 
+## Auto generated SDK
+* SDK to consume BFF GraphQL schema
+    * Auto generate it from BFF url
+    * Use it in frontend application
+
 ## Light / Dark theme
 * Theme switcher implementation
 

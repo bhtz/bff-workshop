@@ -8,6 +8,7 @@
 * ✅ OIDC / Cookie authentication
 * ✅ Proxying API
 * ✅ GraphQL gateway
+* ✅ Auto generated SDK
 * ✅ Light / Dark theme
 * 🚫 I18N
 
@@ -19,6 +20,7 @@
 * 🛠️ OIDC / Cookie authentication
 * ✅ Proxying API
 * 🛠️ GraphQL gateway
+* 🚫 Auto generated SDK
 * 🚫 Light / Dark theme
 * 🚫 I18N
 
@@ -30,6 +32,7 @@
 * 🛠️ OIDC / Cookie authentication
 * ✅ Proxying API
 * 🚫 GraphQL gateway
+* 🚫 Auto generated SDK
 * 🚫 Light / Dark theme
 * 🚫 I18N
 
@@ -41,6 +44,7 @@
 * 🚫 OIDC / Cookie authentication
 * 🛠️ Proxying API
 * 🚫 GraphQL gateway
+* 🚫 Auto generated SDK
 * 🚫 Light / Dark theme
 * 🚫 I18N
 
@@ -52,5 +56,6 @@
 * 🚫 OIDC / Cookie authentication
 * 🚫 Proxying API
 * 🚫 GraphQL gateway
+* 🚫 Auto generated SDK
 * 🚫 Light / Dark theme
 * 🚫 I18N
