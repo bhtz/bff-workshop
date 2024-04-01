@@ -1,4 +1,4 @@
-# BFF WORKSHOP
+# BFF / Frontend workshop
 
 > Workshop & project templates around the BFF (Backend For Frontend) pattern
 

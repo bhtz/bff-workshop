@@ -3,7 +3,7 @@ authors = ["Benjamin HEINTZ"]
 language = "en"
 multilingual = false
 src = "resources"
-title = "BFF workshop"
+title = "BFF / Frontend workshop"
 
 [build]
 build-dir = "../wwwroot"
