@@ -176,7 +176,7 @@
                     <main>
                         <h1 id="bff--frontend-workshop"><a class="header" href="#bff--frontend-workshop">BFF / Frontend workshop</a></h1>
 <blockquote>
-<p>Workshop &amp; project templates around the BFF (Backend For Frontend) pattern</p>
+<p>Project templates to compare stacks around the BFF &amp; SPA pattern (Backend For Frontend &amp; Single Page Application)</p>
 </blockquote>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" width="25"> ASP NET - Blazor <br></p>
 <p><img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/21_Angular_logo_logos-512.png" width="25"> Express - Angular <br></p>
@@ -372,6 +372,248 @@ npm run dev
 <li><a href="https://github.com/dotnet/aspnetcore">Github</a></li>
 </ul>
 <h2 id="features"><a class="header" href="#features">Features</a></h2>
+<h2 id="material-ui-1"><a class="header" href="#material-ui-1">Material UI</a></h2>
+<ul>
+<li>Add material UI design system
+<ul>
+<li>Fluid implementation using <a href="https://mudblazor.com/">MudBlazor</a>. Excellent DX !</li>
+<li>Layout with app bar &amp; collapsable sidemenu to rail</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Easy intergration thx to mudblazor</p>
+</blockquote>
+<pre><code class="language-c#">&lt;MudLayout&gt;
+    &lt;MudAppBar Elevation=&quot;1&quot; Color=&quot;Color.Primary&quot; Dense=&quot;true&quot;&gt;
+        &lt;MudIconButton Icon=&quot;@Icons.Material.Outlined.Menu&quot; Color=&quot;Color.Inherit&quot; Edge=&quot;Edge.Start&quot; OnClick=&quot;((e) =&gt; ToggleDrawer())&quot;/&gt;
+        
+        &lt;MudText&gt;Microscope.Boilerplate.NET&lt;/MudText&gt;
+        @if (!HostingEnvironmentService.IsWebAssembly)
+        {
+            &lt;MudProgressCircular Class=&quot;ml-2&quot; Size=&quot;Size.Small&quot; Color=&quot;Color.Inherit&quot; Indeterminate=&quot;true&quot;&gt;&lt;/MudProgressCircular&gt;
+        }
+        &lt;MudSpacer/&gt;
+        &lt;MudIconButton Icon=&quot;@Icons.Material.Filled.Brightness4&quot; Color=&quot;Color.Inherit&quot; OnClick=&quot;ToggleTheme&quot;/&gt;
+        &lt;MudIconButton Href=&quot;https://github.com/bhtz/microscope-boilerplate&quot; Target=&quot;_blank&quot; Icon=&quot;@Icons.Custom.Brands.GitHub&quot; Color=&quot;Color.Inherit&quot;/&gt;
+        &lt;LoginDisplay /&gt;
+    &lt;/MudAppBar&gt;
+    
+    &lt;MudDrawer @bind-open=&quot;DrawerOpen&quot; ClipMode=&quot;DrawerClipMode.Always&quot; Elevation=&quot;2&quot; Variant=&quot;DrawerVariant.Mini&quot; MiniWidth=&quot;60px&quot;&gt;
+        &lt;NavMenu/&gt;
+    &lt;/MudDrawer&gt;
+    
+    &lt;MudMainContent Class=&quot;mt-16 pa-4&quot;&gt;
+        @Body
+    &lt;/MudMainContent&gt;
+&lt;/MudLayout&gt;
+</code></pre>
+<pre><code class="language-c#">    private bool DrawerOpen { get; set; } = true;
+
+    public void ToggleDrawer()
+    {
+        DrawerOpen = !DrawerOpen;
+    }
+</code></pre>
+<h2 id="version-endpoint-1"><a class="header" href="#version-endpoint-1">Version endpoint</a></h2>
+<blockquote>
+<p>💡 Expose custom server endpoint to &quot;/version&quot; using a simple asp net minimal API endpoint</p>
+</blockquote>
+<pre><code class="language-c#">app.MapGet(&quot;/version&quot;, () =&gt; new { Version = &quot;1.0.0&quot; });
+</code></pre>
+<h2 id="server-side-rendering-1"><a class="header" href="#server-side-rendering-1">Server side rendering</a></h2>
+<ul>
+<li>Expose frontend web application with SSR
+<ul>
+<li>pre-rendering page with data</li>
+<li>fallback into interactive UI</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Let blazor handle the magic : </p>
+</blockquote>
+<p><strong>Program.cs</strong></p>
+<pre><code class="language-c#">    app.MapRazorComponents&lt;Host&gt;()
+        .AddInteractiveServerRenderMode()
+        .AddInteractiveWebAssemblyRenderMode()
+        .AddAdditionalAssemblies(typeof(_Imports).Assembly);
+</code></pre>
+<p><strong>Host.cs</strong></p>
+<pre><code class="language-c#">    &lt;body&gt;
+        &lt;Routes @rendermode=&quot;InteractiveAuto&quot; /&gt;
+        &lt;script src=&quot;_framework/blazor.web.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+</code></pre>
+<h2 id="oidc--cookie-authentication-1"><a class="header" href="#oidc--cookie-authentication-1">OIDC &amp; cookie authentication</a></h2>
+<ul>
+<li>Handle OIDC auth over keycloak SSO</li>
+<li>Cookie &amp; antiforgery token</li>
+<li>Login / Logout clean process</li>
+</ul>
+<blockquote>
+<p>💡 Simple OIDC asp net authentication</p>
+</blockquote>
+<pre><code class="language-c#">        services.AddAuthorization();
+        services.AddAuthentication(options =&gt;
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =&gt;
+            {
+                options.Authority = oidcAuthenticationOptions.Authority;
+                options.ClientId = oidcAuthenticationOptions.ClientId;
+                options.ClientSecret = oidcAuthenticationOptions.ClientSecret;
+
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.ResponseType = OpenIdConnectResponseType.Code;
+
+                options.RequireHttpsMetadata = false;
+                options.SaveTokens = true;
+                options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = oidcAuthenticationOptions.NameClaimType,
+                    RoleClaimType = oidcAuthenticationOptions.RoleClaimType
+                };
+
+                foreach (var item in oidcAuthenticationOptions.Scopes)
+                {
+                    options.Scope.Add(item);
+                }
+            });
+</code></pre>
+<h2 id="proxying-api-1"><a class="header" href="#proxying-api-1">Proxying API</a></h2>
+<ul>
+<li>Proxying downsteam REST API
+<ul>
+<li>Proxying jsonplaceholder &quot;todos&quot; API with route &quot;/api/todos&quot;</li>
+<li><a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using <a href="https://microsoft.github.io/reverse-proxy/">YARP</a></p>
+</blockquote>
+<pre><code class="language-c#">services
+    .AddReverseProxy()
+    .LoadFromConfig(configuration.GetSection(&quot;ReverseProxy&quot;));
+</code></pre>
+<pre><code class="language-json">  &quot;ReverseProxy&quot;: {
+    &quot;Routes&quot;: {
+      &quot;post-service&quot; : {
+        &quot;ClusterId&quot;: &quot;post-service&quot;,
+        &quot;Match&quot;: {
+          &quot;Path&quot;: &quot;/api/todos/{**catch-all}&quot;
+        },
+        &quot;Transforms&quot;: [
+          {
+            &quot;PathRemovePrefix&quot;: &quot;/api&quot;
+          }
+        ]
+      }
+    },
+    &quot;Clusters&quot;: {
+      &quot;post-service&quot;: {
+        &quot;Destinations&quot;: {
+          &quot;post-service&quot;: {
+            &quot;Address&quot;: &quot;https://jsonplaceholder.typicode.com&quot;
+          }
+        }
+      }
+    }
+  }
+</code></pre>
+<h2 id="graphql-gateway-1"><a class="header" href="#graphql-gateway-1">GraphQL gateway</a></h2>
+<ul>
+<li>Gateway GraphQL over downstream subgraph
+<ul>
+<li>Gateway over &quot;countries&quot; graph trevorblades</li>
+<li><a href="https://countries.trevorblades.com/">https://countries.trevorblades.com/</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using Hotchocolate GraphQL gateway</p>
+</blockquote>
+<p><strong>GraphQL configuration</strong></p>
+<pre><code class="language-c#">var builder = services.AddGraphQLServer();
+
+foreach (var scalar in gatewayOptions.Scalars)
+{
+    builder.AddType(new AnyType(scalar));
+}
+
+foreach (var schema in gatewayOptions.Schemas)
+{
+    services
+        .AddHttpClient(schema.Name, c =&gt; c.BaseAddress = new Uri(schema.Url))
+        .AddHttpMessageHandler&lt;BffAuthenticationHeaderHandler&gt;();
+
+    builder.AddRemoteSchema(schema.Name);
+
+    var subgraph = services.AddGraphQL(schema.Name);
+    foreach (var scalar in gatewayOptions.Scalars)
+    {
+        subgraph.AddType(new AnyType(scalar));
+    }
+}
+
+builder.AddTypeExtensionsFromFile(&quot;./stitching.graphql&quot;);
+</code></pre>
+<p><strong>appsettings.development.json</strong></p>
+<pre><code class="language-json">  &quot;GraphQLGateway&quot;: {
+    &quot;Scalars&quot; : [&quot;date&quot;, &quot;timestamptz&quot;, &quot;uuid&quot;],
+    &quot;Schemas&quot;: [
+      {
+        &quot;Name&quot;: &quot;Countries&quot;,
+        &quot;Url&quot;: &quot;https://countries.trevorblades.com/&quot;
+      }
+    ]
+  },
+</code></pre>
+<h2 id="light--dark-theme-1"><a class="header" href="#light--dark-theme-1">Light / Dark theme</a></h2>
+<ul>
+<li>Theme switcher implementation</li>
+</ul>
+<blockquote>
+<p>💡 Using MudBlazor &quot;MudThemingProvider&quot;</p>
+</blockquote>
+<p><strong>Defining theme</strong></p>
+<pre><code class="language-c#">public static MudTheme DarkTheme = new MudTheme()
+{
+    Palette = new Palette()
+    {
+        Black = &quot;#27272f&quot;,
+        Background = &quot;#32333d&quot;,
+        BackgroundGrey = &quot;#27272f&quot;,
+        Primary = Colors.Cyan.Darken3,
+        Surface = &quot;#373740&quot;,
+        DrawerBackground = &quot;#27272f&quot;,
+        DrawerText = &quot;rgba(255,255,255, 0.50)&quot;,
+        AppbarBackground = &quot;#27272f&quot;,
+        AppbarText = &quot;rgba(255,255,255, 0.70)&quot;,
+        TextPrimary = &quot;rgba(255,255,255, 0.70)&quot;,
+        TextSecondary = &quot;rgba(255,255,255, 0.50)&quot;,
+        ActionDefault = &quot;#ffffff&quot;,
+        ActionDisabled = &quot;rgba(255,255,255, 0.26)&quot;,
+        ActionDisabledBackground = &quot;rgba(255,255,255, 0.12)&quot;,
+        DrawerIcon = &quot;rgba(255,255,255, 0.50)&quot;
+    }
+};
+</code></pre>
+<p><strong>Apply theme</strong></p>
+<pre><code class="language-c#">&lt;MudThemingProvider Theme=&quot;_currentTheme&quot; /&gt;
+</code></pre>
+<h2 id="i18n-1"><a class="header" href="#i18n-1">I18N</a></h2>
+<ul>
+<li>I18N switcher : FR &amp; EN</li>
+</ul>
+<blockquote>
+<p>💡 Using resources files &amp; Localization</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="angular-1"><a class="header" href="#angular-1">Angular</a></h1>
 <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/21_Angular_logo_logos-512.png" width="40">
 <blockquote>
@@ -430,6 +672,22 @@ npm run dev
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

@@ -1,6 +1,6 @@
 # BFF / Frontend workshop
 
-> Workshop & project templates around the BFF (Backend For Frontend) pattern
+> Project templates to compare stacks around the BFF & SPA pattern (Backend For Frontend & Single Page Application)
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" width="25"> ASP NET - Blazor <br>
 
