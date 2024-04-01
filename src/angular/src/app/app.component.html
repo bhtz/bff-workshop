@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <mat-icon style="cursor: pointer;" (click)="toggle()" aria-hidden="false" aria-label="Example home icon" fontIcon="menu"></mat-icon>
+  <span style="margin-left: 10px; font-weight: normal; font-size: medium;">Microscope.Boilerplate.Angular</span>
+  <span class="spacer"></span>
+  
+  <button *ngIf="!isAuthenticated" mat-icon-button (click)="login()">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <button *ngIf="isAuthenticated" mat-button [matMenuTriggerFor]="menu">AD</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="goToAccount()">Account</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="sidenav" mode="side" [(opened)]="opened" >
+    <mat-nav-list>
+      <mat-list-item routerLink="/" routerLinkActive="active"><mat-icon class="v-align" fontIcon="home"></mat-icon><span>Home</span></mat-list-item>
+      <mat-list-item routerLink="/counter" routerLinkActive="active"><mat-icon class="v-align" fontIcon="add"></mat-icon><span>Counter</span></mat-list-item>
+      <mat-list-item routerLink="/posts" routerLinkActive="active"><mat-icon class="v-align" fontIcon="list"></mat-icon><span>Posts</span></mat-list-item>
+      <mat-list-item routerLink="/user" routerLinkActive="active"><mat-icon class="v-align" fontIcon="verified_user"></mat-icon><span>User</span></mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

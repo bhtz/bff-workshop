@@ -1,0 +1,41 @@
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+
+@page "/user"
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>User</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">User</MudText>
+<MudText Class="mb-8">This component demonstrates listing user authentication claims</MudText>
+
+@if (Claims is not null)
+{
+    <MudPaper>
+        <MudList>
+            @foreach (var item in Claims)
+            {
+                <MudListItem Icon="@Icons.Material.Filled.StarRate">
+                    <b>@item.Type :</b> @item.Value.ToString()
+                </MudListItem>
+            }
+        </MudList>
+    </MudPaper>
+}
+
+
+
+
+@code
+{
+    private IEnumerable<Claim>? Claims { get; set; }
+    private string? UserName { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        Claims = authState.User.Claims;
+        UserName = authState.User.Identity?.Name;
+    }
+}

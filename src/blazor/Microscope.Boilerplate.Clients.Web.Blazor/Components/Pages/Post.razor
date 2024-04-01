@@ -1,0 +1,72 @@
+@page "/posts"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject HttpClient HttpClient
+@inject PersistentComponentState ApplicationState
+@implements IDisposable
+@attribute [StreamRendering]
+
+<PageTitle>Posts</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Posts</MudText>
+<MudText>This component demonstrates fetching data from the BFF server proxying request over web services</MudText>
+<MudText Class="mb-8">And the capability of persisting application state over the transition from SSR to WASM in interactive auto render mode</MudText>
+
+@if (_posts is null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudTable Items="_posts" Hover="true" SortLabel="Sort By" Elevation="0">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<PostDto, object?>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<PostDto, object?>(x=>x.Title)">Title</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<PostDto, object?>(x=>x.Completed)">Completed</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<PostDto, object?>(x=>x.UserId)">UserId</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Title">@context.Id</MudTd>
+            <MudTd DataLabel="Temp. (C)">@context.Title</MudTd>
+            <MudTd DataLabel="Temp. (F)">@context.Completed</MudTd>
+            <MudTd DataLabel="Summary">@context.UserId</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    public IEnumerable<PostDto>? _posts;
+    private PersistingComponentStateSubscription _subscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _subscription = ApplicationState.RegisterOnPersisting(PersistState);
+        var foundInState = ApplicationState.TryTakeFromJson<IEnumerable<PostDto>>("posts", out var posts);
+        
+        _posts = foundInState
+            ? posts
+            : await HttpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/api/todos");
+    }
+
+    public class PostDto
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string? Title { get; set; }
+        public bool Completed { get; set; }
+    }
+    
+    private Task PersistState()
+    {
+        ApplicationState.PersistAsJson("posts", _posts);
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _subscription.Dispose();
+    }
+}

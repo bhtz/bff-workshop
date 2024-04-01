@@ -1,0 +1,29 @@
+.sidenav-container {
+    margin-top: 48px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+  
+.sidenav {
+    width: 240px;
+}
+
+.sidenav-content {
+    padding: 10px;
+}
+
+mat-toolbar {
+    height: 48px;
+}
+
+.v-align {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+  }
