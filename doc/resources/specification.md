@@ -25,11 +25,13 @@
 * Proxying downsteam REST API
     * Proxying jsonplaceholder "todos" API with route "/api/todos"
     * [https://jsonplaceholder.typicode.com/](https://jsonplaceholder.typicode.com/)
+    * Page listing posts exposed by API
 
 ## GraphQL gateway
 * Gateway GraphQL over downstream subgraph
     * Gateway over "countries" graph trevorblades
     * [https://countries.trevorblades.com/](https://countries.trevorblades.com/)
+    * Page listing continents exposed by API
 
 ## Light / Dark theme
 * Theme switcher implementation

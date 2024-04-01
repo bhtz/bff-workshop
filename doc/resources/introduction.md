@@ -14,5 +14,5 @@ Project templates to compare stacks around the BFF & SPA pattern (Backend For Fr
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Nuxt_logo.svg/2560px-Nuxt_logo.svg.png" width="25"> Nuxt - Vue <br>
 
-<img src="https://yew.rs/img/logo.svg" width="25"> Yew - Rust (coming) <br>
+<img src="https://yew.rs/img/logo.svg" width="25"> Yew - Actix (coming) <br>
 
