@@ -65,20 +65,9 @@ mdbook serve
 * ✅ Material UI
 * ✅ Version endpoint
 * ✅ Server side rendering
-* 🚫 OIDC / Cookie authentication
+* 🛠️ OIDC / Cookie authentication
 * ✅ Proxying API
-* 🚫 GraphQL gateway
-* 🚫 Light / Dark theme
-* 🚫 I18N
-
-### Nextjs - React
-
-* ✅ Material UI
-* ✅ Version endpoint
-* ✅ Server side rendering
-* 🚫 OIDC / Cookie authentication
-* 🚫 Proxying API
-* 🚫 GraphQL gateway
+* 🛠️ GraphQL gateway
 * 🚫 Light / Dark theme
 * 🚫 I18N
 
@@ -87,8 +76,30 @@ mdbook serve
 * ✅ Material UI
 * ✅ Version endpoint
 * ✅ Server side rendering
-* 🚫 OIDC / Cookie authentication
+* 🛠️ OIDC / Cookie authentication
 * ✅ Proxying API
+* 🚫 GraphQL gateway
+* 🚫 Light / Dark theme
+* 🚫 I18N
+
+### Nextjs - React
+
+* 🛠️ Material UI
+* ✅ Version endpoint
+* ✅ Server side rendering
+* 🚫 OIDC / Cookie authentication
+* 🛠️ Proxying API
+* 🚫 GraphQL gateway
+* 🚫 Light / Dark theme
+* 🚫 I18N
+
+### Yew - Rust (coming)
+
+* 🚫 Material UI
+* 🚫 Version endpoint
+* 🚫 Server side rendering
+* 🚫 OIDC / Cookie authentication
+* 🚫 Proxying API
 * 🚫 GraphQL gateway
 * 🚫 Light / Dark theme
 * 🚫 I18N

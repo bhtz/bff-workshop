@@ -1,0 +1,36 @@
+# Specification
+
+> To add a "BFF/Frontend" stack reference to this repository, here is the following specifications :
+
+## Material UI
+* Add material UI design system
+    * color primary by techno
+    * layout with app bar & collapsable sidemenu to rail
+
+## Version endpoint
+* Expose custom server endpoint to "/version"
+    * return { version: "1.0.0" }
+
+## Server side rendering
+* Expose frontend web application with SSR
+    * pre-rendering page with data
+    * fallback into interactive UI
+
+## OIDC & cookie authentication
+* Handle OIDC auth over keycloak SSO
+* Cookie & antiforgery token
+* Login / Logout clean process
+
+## Proxying API
+* Proxying downsteam REST API
+    * Proxying jsonplaceholder "todos" API with route "/api/todos"
+
+## GraphQL gateway
+* Gateway GraphQL over downstream subgraph
+    * Gateway over "countries" graph trevorblades
+
+## Light / Dark theme
+* Theme switcher implementation
+
+## I18N
+* I18N switcher : FR & EN

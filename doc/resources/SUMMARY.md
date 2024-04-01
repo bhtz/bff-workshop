@@ -1,6 +1,13 @@
 # Home
-
 [Introduction](./introduction.md)
 [Definition](./definition.md)
-[Code sample](./code-sample.md)
-[ADR](./adr.md)
+[Specification](./specification.md)
+[Installation](./installation.md)
+[Roadmap](./roadmap.md)
+
+# Stacks
+- [Blazor](./technos/blazor.md)
+- [Angular](./technos/angular.md)
+- [Nextjs](./technos/nextjs.md)
+- [Nuxt](./technos/nuxt.md)
+- [Yew](./technos/yew.md)
