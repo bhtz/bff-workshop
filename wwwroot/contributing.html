@@ -191,6 +191,19 @@ mdbook serve -p 5555
 <pre><code class="language-console">cd ./IAC
 docker-compose up
 </code></pre>
+<p>Go to <a href="http://localhost:8083/admin/master/console/#/microscope/clients">keycloak realm admin</a> &amp; regenerate clientSecret for &quot;boilerplate&quot; client</p>
+<ul>
+<li><a href="http://localhost:8083/admin/master/console/#/microscope/clients">keycloak realm admin</a>
+<ul>
+<li>Credentials
+<ul>
+<li>Client secret &gt; Regenerate</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Then set all your config file with this secret</p>
 <h2 id="blazor"><a class="header" href="#blazor">Blazor</a></h2>
 <pre><code class="language-console">cd ./src/blazor/Microscope.Boilerplate.Clients.BFF
 dotnet run
@@ -237,22 +250,6 @@ npm run dev
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

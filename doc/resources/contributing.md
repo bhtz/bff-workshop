@@ -22,6 +22,14 @@ cd ./IAC
 docker-compose up
 ```
 
+Go to [keycloak realm admin](http://localhost:8083/admin/master/console/#/microscope/clients) & regenerate clientSecret for "boilerplate" client
+
+* [keycloak realm admin](http://localhost:8083/admin/master/console/#/microscope/clients)
+    * Credentials
+        * Client secret > Regenerate
+
+Then set all your config file with this secret
+
 ## Blazor
 
 ```console
