@@ -1,7 +1,10 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
-    <MudNavLink Href="posts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Posts</MudNavLink>
-    <MudNavLink Href="continents" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Web">Continents</MudNavLink>
-    <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">User</MudNavLink>
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<NavMenu> Loc
+
+<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@Loc["Home"]</MudNavLink>
+    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">@Loc["Counter"]</MudNavLink>
+    <MudNavLink Href="posts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@Loc["Posts"]</MudNavLink>
+    <MudNavLink Href="continents" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Web">@Loc["Continents"]</MudNavLink>
+    <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">@Loc["User"]</MudNavLink>
 </MudNavMenu>

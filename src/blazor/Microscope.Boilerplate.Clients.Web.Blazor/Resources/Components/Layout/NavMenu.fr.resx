@@ -18,4 +18,19 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="Home" xml:space="preserve">
+        <value>Accueil</value>
+    </data>
+    <data name="Counter" xml:space="preserve">
+        <value>Compteur</value>
+    </data>
+    <data name="Posts" xml:space="preserve">
+        <value>Articles</value>
+    </data>
+    <data name="Continents" xml:space="preserve">
+        <value>Continents</value>
+    </data>
+    <data name="User" xml:space="preserve">
+        <value>Utilisateur</value>
+    </data>
 </root>

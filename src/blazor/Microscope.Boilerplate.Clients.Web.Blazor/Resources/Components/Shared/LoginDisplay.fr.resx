@@ -22,6 +22,6 @@
         <value>Compte</value>
     </data>
     <data name="Logout" xml:space="preserve">
-        <value>Logout</value>
+        <value>Se déconnecter</value>
     </data>
 </root>

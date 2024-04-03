@@ -184,7 +184,7 @@
 <li>✅ GraphQL gateway</li>
 <li>✅ Auto generated SDK</li>
 <li>✅ Light / Dark theme</li>
-<li>🚫 I18N</li>
+<li>✅ I18N</li>
 </ul>
 <h3 id="express---angular"><a class="header" href="#express---angular">Express - Angular</a></h3>
 <ul>
@@ -264,6 +264,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

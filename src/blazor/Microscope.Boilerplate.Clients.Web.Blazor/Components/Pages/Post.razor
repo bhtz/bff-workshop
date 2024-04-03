@@ -1,16 +1,17 @@
 @page "/posts"
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
 @attribute [Authorize]
 @inject HttpClient HttpClient
 @inject PersistentComponentState ApplicationState
+@inject IStringLocalizer<Post> Loc
 @implements IDisposable
 @attribute [StreamRendering]
 
 <PageTitle>Posts</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Posts</MudText>
-<MudText>This component demonstrates fetching data from the BFF server proxying request over web services</MudText>
-<MudText Class="mb-8">And the capability of persisting application state over the transition from SSR to WASM in interactive auto render mode</MudText>
+<MudText Typo="Typo.h3" GutterBottom="true">@Loc["Title"]</MudText>
+<MudText Class="mb-8">@Loc["SubTitle"]</MudText>
 
 @if (_posts is null)
 {

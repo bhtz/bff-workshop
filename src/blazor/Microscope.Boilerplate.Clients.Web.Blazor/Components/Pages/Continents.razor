@@ -2,13 +2,15 @@
 @using Microscope.Boilerplate.Clients.SDK.GraphQL.Components
 @using Microsoft.AspNetCore.Authorization
 @using Microscope.Boilerplate.Clients.SDK.GraphQL
+@using Microsoft.Extensions.Localization
 @inject BFFClient BffClient;
 @attribute [Authorize]
 @attribute [StreamRendering]
+@inject IStringLocalizer<Continents> Loc
 
 <PageTitle>Continents</PageTitle>
-<MudText Typo="Typo.h3" GutterBottom="true">Continents</MudText>
-<MudText Class="mb-8">This component demonstrates fetching data from the BFF server as GraphQL gateway & using strawberryshake graphql generated SDK</MudText>
+<MudText Typo="Typo.h3" GutterBottom="true">@Loc["Title"]</MudText>
+<MudText Class="mb-8">@Loc["SubTitle"]</MudText>
 
 <UseGetContinents Context="result">
     <ChildContent>

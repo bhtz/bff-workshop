@@ -10,7 +10,7 @@
 * ✅ GraphQL gateway
 * ✅ Auto generated SDK
 * ✅ Light / Dark theme
-* 🚫 I18N
+* ✅ I18N
 
 ### Express - Angular
 

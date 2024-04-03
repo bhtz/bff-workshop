@@ -4,6 +4,8 @@ using Microscope.Boilerplate.Clients.BFF.Providers;
 using Microscope.Boilerplate.Clients.Web.Blazor;
 using Microscope.Boilerplate.Clients.Web.Blazor.Configurations;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Localization;
 using Host = Microscope.Boilerplate.Clients.BFF.Components.Host;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ if (isWebAppEnabled)
 {
     var baseAddress = builder.Configuration.GetValue<string>("BaseAddress") ?? throw new InvalidOperationException("BaseAddress configuration cannot be null");
 
+    builder.Services.AddLocalizationConfiguration(builder.Configuration);
     builder.Services.AddScoped<ClientAuthenticationHeaderHandler>();
     builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
     builder.Services.AddCascadingAuthenticationState();
@@ -35,6 +38,14 @@ if (isWebAppEnabled)
 }
 
 var app = builder.Build();
+
+string[] supportedCultures = ["en-US", "fr-FR"];
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -65,6 +76,7 @@ if (isWebAppEnabled)
     app.UseStaticFiles();
     app.UseAntiforgery();
     
+    app.MapCultureEndpoints();
     app.MapRazorComponents<Host>()
         .AddInteractiveServerRenderMode()
         .AddInteractiveWebAssemblyRenderMode()

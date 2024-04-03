@@ -19,9 +19,9 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="Title" xml:space="preserve">
-        <value>Utilisateur</value>
+        <value>Continents</value>
     </data>
     <data name="SubTitle" xml:space="preserve">
-        <value>Ce composant montre la liste des revendications d'authentification des utilisateurs</value>
+        <value>This component demonstrates fetching data from the BFF server as GraphQL gateway &amp; using strawberryshake graphql generated SDK</value>
     </data>
 </root>

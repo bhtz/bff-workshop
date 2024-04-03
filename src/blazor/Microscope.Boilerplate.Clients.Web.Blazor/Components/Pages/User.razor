@@ -1,14 +1,16 @@
 ﻿@using System.Security.Claims
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
 
 @page "/user"
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<User> Loc
 
 <PageTitle>User</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">User</MudText>
-<MudText Class="mb-8">This component demonstrates listing user authentication claims</MudText>
+<MudText Typo="Typo.h3" GutterBottom="true">@Loc["Title"]</MudText>
+<MudText Class="mb-8">@Loc["SubTitle"]</MudText>
 
 @if (Claims is not null)
 {

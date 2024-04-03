@@ -473,6 +473,47 @@ dotnet graphql init http://localhost:5215/graphql -n BffClient
 <blockquote>
 <p>💡 Using resources files &amp; Localization</p>
 </blockquote>
+<p><strong>server side &amp; client side</strong></p>
+<pre><code class="language-c#">services.AddLocalization(options =&gt; options.ResourcesPath = &quot;Resources&quot; );
+</code></pre>
+<p><strong>set culture endpoint</strong></p>
+<pre><code class="language-c#">app.MapGet(&quot;/culture&quot;, (HttpContext context, string? culture, string? redirectUri) =&gt;
+{
+    if (culture != null)
+    {
+        var requestCulture = new RequestCulture(culture, culture);
+        var cookieName = CookieRequestCultureProvider.DefaultCookieName;
+        var cookieValue = CookieRequestCultureProvider.MakeCookieValue(requestCulture);
+
+        context.Response.Cookies.Append(cookieName, cookieValue);
+    }
+
+    return Results.Redirect(redirectUri ?? &quot;/&quot;);
+});
+</code></pre>
+<p><strong>client side set culture based on cookie (for SSR WASM fallback)</strong></p>
+<pre><code class="language-c#">var host = builder.Build();
+
+var cookieService = host.Services.GetRequiredService&lt;CookieService&gt;();
+var cultureCookie = await cookieService.GetCultureFromCookie();
+
+if (!string.IsNullOrEmpty(cultureCookie))
+{
+    var culture = CookieRequestCultureProvider.ParseCookieValue(cultureCookie)?.Cultures.FirstOrDefault().ToString();
+    if (culture is not null)
+    {
+        var cultureInfo = new CultureInfo(culture);
+        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+    }
+}
+
+await host.RunAsync();
+</code></pre>
+<p><strong>razor page</strong></p>
+<pre><code class="language-c#">@inject IStringLocalizer&lt;Continents&gt; Loc
+&lt;MudText Class=&quot;mb-8&quot;&gt;@Loc[&quot;SubTitle&quot;]&lt;/MudText&gt;
+</code></pre>
 
                     </main>
 
@@ -503,6 +544,22 @@ dotnet graphql init http://localhost:5215/graphql -n BffClient
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

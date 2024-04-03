@@ -1,6 +1,8 @@
 ﻿@using Microsoft.Extensions.Configuration
 @using System.Security.Claims
+@using Microsoft.Extensions.Localization
 
+@inject IStringLocalizer<LoginDisplay> Loc
 @inject NavigationManager Navigation
 @inject IConfiguration Configuration
 @inject IJSRuntime JsRuntime
@@ -14,8 +16,8 @@
             <ChildContent>
                 <PersonCard Name="@context.User.Identity?.Name" Role="@context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value" Class="mt-n2" />
                 <MudDivider Class="mb-2" />
-                <MudListItem Text="Account" Icon="@Icons.Material.Filled.ManageAccounts" @onclick="OpenAccount" />
-                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Logout" @onclick="BeginSignOut" />
+                <MudListItem Text="@Loc["Account"]" Icon="@Icons.Material.Filled.ManageAccounts" @onclick="OpenAccount" />
+                <MudListItem Text="@Loc["Logout"]" Icon="@Icons.Material.Outlined.Logout" @onclick="BeginSignOut" />
             </ChildContent>
         </MudMenu>
     </Authorized>

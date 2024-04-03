@@ -1,23 +1,26 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Localization;
 
 namespace Microscope.Boilerplate.Clients.BFF.Endpoints;
 
-public static class AuthenticationEndpoints
+public static class CultureEndpoints
 {
-    public static void MapAuthenticationEndpoints(this WebApplication app)
+    public static void MapCultureEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("auth");
-        
-        group.MapGet("/login", (string? returnUrl) =>
+        app.MapGet("/culture", (HttpContext context, string? culture, string? redirectUri) =>
         {
-            var url = string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl;
-            return TypedResults.Challenge(new AuthenticationProperties() { RedirectUri = url },
-                [CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme]);
-        }).AllowAnonymous();
+            if (culture != null)
+            {
+                var requestCulture = new RequestCulture(culture, culture);
+                var cookieName = CookieRequestCultureProvider.DefaultCookieName;
+                var cookieValue = CookieRequestCultureProvider.MakeCookieValue(requestCulture);
 
-        group.MapGet("/logout", (IHttpContextAccessor httpContextAccessor) => Task.FromResult(TypedResults.SignOut(new AuthenticationProperties() { RedirectUri = "/" },
-            [CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme]))).RequireAuthorization();
+                context.Response.Cookies.Append(cookieName, cookieValue);
+            }
+
+            return Results.Redirect(redirectUri ?? "/");
+        });
     }
 }

@@ -1,13 +1,10 @@
 namespace Microscope.Boilerplate.Clients.BFF.Configurations;
 
-public static class LocalisationConfiguration
+public static class LocalizationConfiguration
 {
-    public static IServiceCollection AddReverseProxyConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddLocalizationConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        services
-            .AddReverseProxy()
-            .LoadFromConfig(configuration.GetSection("ReverseProxy"));
-
+        services.AddLocalization(options => options.ResourcesPath = "Resources" );
         return services;
     }
 }

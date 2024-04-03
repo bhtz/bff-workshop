@@ -301,3 +301,52 @@ public static MudTheme DarkTheme = new MudTheme()
 * I18N switcher : FR & EN
 
 > 💡 Using resources files & Localization
+
+**server side & client side**
+```c#
+services.AddLocalization(options => options.ResourcesPath = "Resources" );
+```
+
+**set culture endpoint**
+```c#
+app.MapGet("/culture", (HttpContext context, string? culture, string? redirectUri) =>
+{
+    if (culture != null)
+    {
+        var requestCulture = new RequestCulture(culture, culture);
+        var cookieName = CookieRequestCultureProvider.DefaultCookieName;
+        var cookieValue = CookieRequestCultureProvider.MakeCookieValue(requestCulture);
+
+        context.Response.Cookies.Append(cookieName, cookieValue);
+    }
+
+    return Results.Redirect(redirectUri ?? "/");
+});
+```
+
+**client side set culture based on cookie (for SSR WASM fallback)**
+```c#
+var host = builder.Build();
+
+var cookieService = host.Services.GetRequiredService<CookieService>();
+var cultureCookie = await cookieService.GetCultureFromCookie();
+
+if (!string.IsNullOrEmpty(cultureCookie))
+{
+    var culture = CookieRequestCultureProvider.ParseCookieValue(cultureCookie)?.Cultures.FirstOrDefault().ToString();
+    if (culture is not null)
+    {
+        var cultureInfo = new CultureInfo(culture);
+        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+    }
+}
+
+await host.RunAsync();
+```
+
+**razor page**
+```c#
+@inject IStringLocalizer<Continents> Loc
+<MudText Class="mb-8">@Loc["SubTitle"]</MudText>
+```
