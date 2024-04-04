@@ -285,6 +285,14 @@
 <ul>
 <li>I18N switcher : FR &amp; EN</li>
 </ul>
+<h2 id="feature-management"><a class="header" href="#feature-management">Feature management</a></h2>
+<ul>
+<li>BFF expose feature management configuration
+<ul>
+<li>Enable / disable flag from config and show &quot;User&quot; page link in sidemenu accordingly (A/B testing)</li>
+</ul>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="roadmap"><a class="header" href="#roadmap">Roadmap</a></h1>
 <h3 id="aspnet---blazor"><a class="header" href="#aspnet---blazor">ASP.NET - Blazor</a></h3>
 <ul>
@@ -297,18 +305,20 @@
 <li>✅ Auto generated SDK</li>
 <li>✅ Light / Dark theme</li>
 <li>✅ I18N</li>
+<li>✅ Feature management</li>
 </ul>
 <h3 id="express---angular"><a class="header" href="#express---angular">Express - Angular</a></h3>
 <ul>
 <li>✅ Material UI</li>
 <li>✅ Custom endpoint</li>
 <li>✅ Server side rendering</li>
-<li>🛠️ OIDC / Cookie authentication</li>
+<li>✅ OIDC / Cookie authentication (to 🧹)</li>
 <li>✅ Proxying API</li>
 <li>🛠️ GraphQL gateway</li>
 <li>🚫 Auto generated SDK</li>
 <li>🚫 Light / Dark theme</li>
 <li>🚫 I18N</li>
+<li>🚫 Feature management</li>
 </ul>
 <h3 id="nuxt---vue"><a class="header" href="#nuxt---vue">Nuxt - Vue</a></h3>
 <ul>
@@ -321,6 +331,7 @@
 <li>🚫 Auto generated SDK</li>
 <li>🚫 Light / Dark theme</li>
 <li>🚫 I18N</li>
+<li>🚫 Feature management</li>
 </ul>
 <h3 id="nextjs---react"><a class="header" href="#nextjs---react">Nextjs - React</a></h3>
 <ul>
@@ -333,6 +344,7 @@
 <li>🚫 Auto generated SDK</li>
 <li>🚫 Light / Dark theme</li>
 <li>🚫 I18N</li>
+<li>🚫 Feature management</li>
 </ul>
 <h3 id="yew---rust-coming"><a class="header" href="#yew---rust-coming">Yew - Rust (coming)</a></h3>
 <ul>
@@ -345,6 +357,7 @@
 <li>🚫 Auto generated SDK</li>
 <li>🚫 Light / Dark theme</li>
 <li>🚫 I18N</li>
+<li>🚫 Feature management</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
 <h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
@@ -733,6 +746,57 @@ await host.RunAsync();
 <p><strong>razor page</strong></p>
 <pre><code class="language-c#">@inject IStringLocalizer&lt;Continents&gt; Loc
 &lt;MudText Class=&quot;mb-8&quot;&gt;@Loc[&quot;SubTitle&quot;]&lt;/MudText&gt;
+</code></pre>
+<h2 id="feature-management-1"><a class="header" href="#feature-management-1">Feature management</a></h2>
+<ul>
+<li>BFF expose feature management configuration
+<ul>
+<li>Enable / disable flag from config</li>
+<li>A/B testing use case</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using Microsoft.FeatureManagement.AspNetCore</p>
+</blockquote>
+<p><strong>client page</strong></p>
+<pre><code class="language-c#">public class ClientFeatureManagementService(HttpClient client) : IFeatureManagementService
+{
+    public async Task&lt;Dictionary&lt;string, bool&gt;?&gt; GetFeatureManagement()
+    {
+        return await client.GetFromJsonAsync&lt;Dictionary&lt;string, bool&gt;&gt;(&quot;/api/features&quot;);
+    }
+}
+</code></pre>
+<p><strong>server page</strong></p>
+<pre><code class="language-c#">public class ServerFeatureManagementService(IFeatureManager featureManager) : IFeatureManagementService
+{
+    public async Task&lt;Dictionary&lt;string, bool&gt;?&gt; GetFeatureManagement()
+    {
+        return await featureManager.GetFeatureNamesAsync()
+            .ToDictionaryAsync(
+                feature =&gt; feature, 
+                feature =&gt; featureManager.IsEnabledAsync(feature).GetAwaiter().GetResult());
+    }
+}
+</code></pre>
+<p><strong>endpoint feature management</strong></p>
+<pre><code class="language-c#">public static void MapFeatureManagementEndpoints(this WebApplication app)
+{
+    app.MapGet(&quot;/api/features&quot;, async (IFeatureManagementService featureManagementService) =&gt; 
+        await featureManagementService.GetFeatureManagement());
+}
+</code></pre>
+<p><strong>pages or layout</strong></p>
+<pre><code class="language-c#">@if (IsUserPageEnabled)
+{
+    &lt;MudNavLink Href=&quot;user&quot; Match=&quot;NavLinkMatch.Prefix&quot; Icon=&quot;@Icons.Material.Filled.VerifiedUser&quot;&gt;@Loc[&quot;User&quot;]&lt;/MudNavLink&gt;
+}
+// ...
+private bool IsUserPageEnabled { get; set; }
+// ...
+var features = await FeatureManagementService.GetFeatureManagement();
+IsUserPageEnabled = features.FirstOrDefault(x =&gt; x.Key == &quot;ShowUserPage&quot;).Value;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="angular-1"><a class="header" href="#angular-1">Angular</a></h1>
 <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/21_Angular_logo_logos-512.png" width="40">

@@ -1,6 +1,6 @@
 namespace Microscope.Boilerplate.Clients.Web.Blazor.Services;
 
-public class IFeatureManagementService
+public interface IFeatureManagementService
 {
-    
+    public Task<Dictionary<string, bool>?> GetFeatureManagement();
 }

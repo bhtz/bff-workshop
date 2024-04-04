@@ -6,10 +6,8 @@ import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 import proxy from 'express-http-proxy';
 import cors from 'cors';
-import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { server } from 'typescript';
-const { ApolloGateway, IntrospectAndCompose } = require('@apollo/gateway');
+import graphQlServer from './graphql';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export async function app(): Promise<express.Express> {
@@ -18,23 +16,15 @@ export async function app(): Promise<express.Express> {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  // graphql gateway
+  // mount graphql gateway
+  const apollo = graphQlServer;
+  await apollo.start()
 
-  // var gateway = new ApolloGateway({
-  //   supergraphSdl: new IntrospectAndCompose({
-  //     subgraphs: [
-  //       { name: 'countries', url: 'https://countries.trevorblades.com/' },
-  //     ],
-  //   })
-  // });
-  // var apollo = new ApolloServer({ gateway });
-  // await apollo.start()
-
-  // server.use('/graphql',
-  //   cors<cors.CorsRequest>(),
-  //   express.json(),
-  //   expressMiddleware(apollo)
-  // );
+  server.use('/graphql',
+    cors<cors.CorsRequest>(),
+    express.json(),
+    expressMiddleware(apollo)
+  );
 
   const commonEngine = new CommonEngine();
 

@@ -18,6 +18,7 @@ public static class AuthenticationEndpoints
         }).AllowAnonymous();
 
         group.MapGet("/logout", (IHttpContextAccessor httpContextAccessor) => Task.FromResult(TypedResults.SignOut(new AuthenticationProperties() { RedirectUri = "/" },
-            [CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme]))).RequireAuthorization();
+            [CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme])))
+            .RequireAuthorization();
     }
 }

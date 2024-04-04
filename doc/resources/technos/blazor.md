@@ -350,3 +350,57 @@ await host.RunAsync();
 @inject IStringLocalizer<Continents> Loc
 <MudText Class="mb-8">@Loc["SubTitle"]</MudText>
 ```
+
+## Feature management
+* BFF expose feature management configuration
+    * Enable / disable flag from config
+    * A/B testing use case
+
+> 💡 Using Microsoft.FeatureManagement.AspNetCore
+
+**client page**
+```c#
+public class ClientFeatureManagementService(HttpClient client) : IFeatureManagementService
+{
+    public async Task<Dictionary<string, bool>?> GetFeatureManagement()
+    {
+        return await client.GetFromJsonAsync<Dictionary<string, bool>>("/api/features");
+    }
+}
+```
+
+**server page**
+```c#
+public class ServerFeatureManagementService(IFeatureManager featureManager) : IFeatureManagementService
+{
+    public async Task<Dictionary<string, bool>?> GetFeatureManagement()
+    {
+        return await featureManager.GetFeatureNamesAsync()
+            .ToDictionaryAsync(
+                feature => feature, 
+                feature => featureManager.IsEnabledAsync(feature).GetAwaiter().GetResult());
+    }
+}
+```
+
+**endpoint feature management**
+```c#
+public static void MapFeatureManagementEndpoints(this WebApplication app)
+{
+    app.MapGet("/api/features", async (IFeatureManagementService featureManagementService) => 
+        await featureManagementService.GetFeatureManagement());
+}
+```
+
+**pages or layout**
+```c#
+@if (IsUserPageEnabled)
+{
+    <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">@Loc["User"]</MudNavLink>
+}
+// ...
+private bool IsUserPageEnabled { get; set; }
+// ...
+var features = await FeatureManagementService.GetFeatureManagement();
+IsUserPageEnabled = features.FirstOrDefault(x => x.Key == "ShowUserPage").Value;
+```

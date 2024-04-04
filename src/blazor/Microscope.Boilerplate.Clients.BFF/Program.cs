@@ -3,6 +3,7 @@ using Microscope.Boilerplate.Clients.BFF.Endpoints;
 using Microscope.Boilerplate.Clients.BFF.Providers;
 using Microscope.Boilerplate.Clients.Web.Blazor;
 using Microscope.Boilerplate.Clients.Web.Blazor.Configurations;
+using Microscope.Boilerplate.Clients.Web.Blazor.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
@@ -23,6 +24,7 @@ if (isWebAppEnabled)
 {
     var baseAddress = builder.Configuration.GetValue<string>("BaseAddress") ?? throw new InvalidOperationException("BaseAddress configuration cannot be null");
 
+    builder.Services.AddFeatureManagementConfiguration(builder.Configuration);
     builder.Services.AddLocalizationConfiguration(builder.Configuration);
     builder.Services.AddScoped<ClientAuthenticationHeaderHandler>();
     builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
@@ -68,6 +70,7 @@ app.UseAuthorization();
 app.MapReverseProxy();
 app.MapGraphQL();
 app.MapAuthenticationEndpoints();
+app.MapFeatureManagementEndpoints();
 app.MapGet("/version", () => new { Version = "1.0.0" });
 
 // Map SSR blazor web app

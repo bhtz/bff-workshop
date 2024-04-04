@@ -17,7 +17,7 @@ export class AuthService {
         const authConfig: AuthConfig = {
             issuer: 'http://localhost:8083/realms/microscope/',
             clientId: 'boilerplate',
-            dummyClientSecret: 'JxaXjmKOd08cMpaKrThAObUzeOmyRiLN',
+            dummyClientSecret: 'VJrmC7kyn2gurr7wAGCjwJ5NKAgQJ92E',
             scope: 'roles',
             responseType: 'code',
             redirectUri: 'http://localhost:4200/',

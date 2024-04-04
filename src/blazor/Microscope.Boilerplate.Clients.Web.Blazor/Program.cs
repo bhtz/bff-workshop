@@ -23,6 +23,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddSingleton<AuthenticationStateProvider, PersistentAuthenticationStateProvider>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources" );
 builder.Services.AddScoped<CookieService>();
+builder.Services.AddScoped<IFeatureManagementService, ClientFeatureManagementService>();
 
 var host = builder.Build();
 

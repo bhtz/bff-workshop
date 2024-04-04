@@ -514,6 +514,57 @@ await host.RunAsync();
 <pre><code class="language-c#">@inject IStringLocalizer&lt;Continents&gt; Loc
 &lt;MudText Class=&quot;mb-8&quot;&gt;@Loc[&quot;SubTitle&quot;]&lt;/MudText&gt;
 </code></pre>
+<h2 id="feature-management"><a class="header" href="#feature-management">Feature management</a></h2>
+<ul>
+<li>BFF expose feature management configuration
+<ul>
+<li>Enable / disable flag from config</li>
+<li>A/B testing use case</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using Microsoft.FeatureManagement.AspNetCore</p>
+</blockquote>
+<p><strong>client page</strong></p>
+<pre><code class="language-c#">public class ClientFeatureManagementService(HttpClient client) : IFeatureManagementService
+{
+    public async Task&lt;Dictionary&lt;string, bool&gt;?&gt; GetFeatureManagement()
+    {
+        return await client.GetFromJsonAsync&lt;Dictionary&lt;string, bool&gt;&gt;(&quot;/api/features&quot;);
+    }
+}
+</code></pre>
+<p><strong>server page</strong></p>
+<pre><code class="language-c#">public class ServerFeatureManagementService(IFeatureManager featureManager) : IFeatureManagementService
+{
+    public async Task&lt;Dictionary&lt;string, bool&gt;?&gt; GetFeatureManagement()
+    {
+        return await featureManager.GetFeatureNamesAsync()
+            .ToDictionaryAsync(
+                feature =&gt; feature, 
+                feature =&gt; featureManager.IsEnabledAsync(feature).GetAwaiter().GetResult());
+    }
+}
+</code></pre>
+<p><strong>endpoint feature management</strong></p>
+<pre><code class="language-c#">public static void MapFeatureManagementEndpoints(this WebApplication app)
+{
+    app.MapGet(&quot;/api/features&quot;, async (IFeatureManagementService featureManagementService) =&gt; 
+        await featureManagementService.GetFeatureManagement());
+}
+</code></pre>
+<p><strong>pages or layout</strong></p>
+<pre><code class="language-c#">@if (IsUserPageEnabled)
+{
+    &lt;MudNavLink Href=&quot;user&quot; Match=&quot;NavLinkMatch.Prefix&quot; Icon=&quot;@Icons.Material.Filled.VerifiedUser&quot;&gt;@Loc[&quot;User&quot;]&lt;/MudNavLink&gt;
+}
+// ...
+private bool IsUserPageEnabled { get; set; }
+// ...
+var features = await FeatureManagementService.GetFeatureManagement();
+IsUserPageEnabled = features.FirstOrDefault(x =&gt; x.Key == &quot;ShowUserPage&quot;).Value;
+</code></pre>
 
                     </main>
 

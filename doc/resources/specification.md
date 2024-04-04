@@ -43,3 +43,7 @@
 
 ## I18N
 * I18N switcher : FR & EN
+
+## Feature management
+* BFF expose feature management configuration
+    * Enable / disable flag from config and show "User" page link in sidemenu accordingly (A/B testing)

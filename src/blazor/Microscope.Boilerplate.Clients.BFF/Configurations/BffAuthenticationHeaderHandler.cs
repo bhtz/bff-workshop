@@ -1,5 +1,4 @@
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace Microscope.Boilerplate.Clients.BFF.Configurations;
 

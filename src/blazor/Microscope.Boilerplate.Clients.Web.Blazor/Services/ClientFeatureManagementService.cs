@@ -2,17 +2,10 @@ using System.Net.Http.Json;
 
 namespace Microscope.Boilerplate.Clients.Web.Blazor.Services;
 
-public class ClientFeatureManagementService(HttpClient client)
+public class ClientFeatureManagementService(HttpClient client) : IFeatureManagementService
 {
-    private Dictionary<string, bool> Features { get; set; } = new();
-
-    public async Task LoadFeatureManagement()
+    public async Task<Dictionary<string, bool>?> GetFeatureManagement()
     {
-        var featuresResult = await client.GetFromJsonAsync<Dictionary<string, bool>>("/api/features");
-        if (featuresResult is not null)
-        {
-            Features = featuresResult;
-            Console.WriteLine(featuresResult);
-        }
+        return await client.GetFromJsonAsync<Dictionary<string, bool>>("/api/features");
     }
 }

@@ -1,10 +1,51 @@
 ﻿@using Microsoft.Extensions.Localization
+@using Microscope.Boilerplate.Clients.Web.Blazor.Services
 @inject IStringLocalizer<NavMenu> Loc
+@inject IFeatureManagementService FeatureManagementService;
+@inject PersistentComponentState ApplicationState
+@implements IDisposable
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@Loc["Home"]</MudNavLink>
     <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">@Loc["Counter"]</MudNavLink>
     <MudNavLink Href="posts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@Loc["Posts"]</MudNavLink>
     <MudNavLink Href="continents" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Web">@Loc["Continents"]</MudNavLink>
-    <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">@Loc["User"]</MudNavLink>
+    @if (IsUserPageEnabled)
+    {
+        <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">@Loc["User"]</MudNavLink>
+    }
 </MudNavMenu>
+
+@code
+{
+    private bool IsUserPageEnabled { get; set; }
+    private PersistingComponentStateSubscription _subscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _subscription = ApplicationState.RegisterOnPersisting(PersistState);
+        
+        var foundInState = ApplicationState.TryTakeFromJson<bool>(nameof(NavMenu), out var isUserPageEnabled);
+
+        if (foundInState)
+        {
+            IsUserPageEnabled = isUserPageEnabled;
+        }
+        else
+        {
+            var features = await FeatureManagementService.GetFeatureManagement();
+            IsUserPageEnabled = features.FirstOrDefault(x => x.Key == "ShowUserPage").Value;
+        }
+    }
+    
+    private Task PersistState()
+    {
+        ApplicationState.PersistAsJson(nameof(NavMenu), IsUserPageEnabled);
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _subscription.Dispose();
+    }
+}
