@@ -8,6 +8,8 @@ import proxy from 'express-http-proxy';
 import cors from 'cors';
 import { expressMiddleware } from '@apollo/server/express4';
 import graphQlServer from './graphql';
+import config from 'config';
+import { FeatureFlagResponse } from './src/app/services/feature-flags.service';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export async function app(): Promise<express.Express> {
@@ -41,6 +43,11 @@ export async function app(): Promise<express.Express> {
 
   server.get('/version', (req, res) => {
     res.json({ version: '1.0.0' })
+  })
+
+  server.get('/features', (req, res) => {
+    let configs = config.get('FeatureManagement') as FeatureFlagResponse;
+    res.json(configs);
   })
 
   // All regular routes use the Angular engine

@@ -21,7 +21,7 @@
       <mat-list-item routerLink="/" routerLinkActive="active"><mat-icon class="v-align" fontIcon="home"></mat-icon><span>Home</span></mat-list-item>
       <mat-list-item routerLink="/counter" routerLinkActive="active"><mat-icon class="v-align" fontIcon="add"></mat-icon><span>Counter</span></mat-list-item>
       <mat-list-item routerLink="/posts" routerLinkActive="active"><mat-icon class="v-align" fontIcon="list"></mat-icon><span>Posts</span></mat-list-item>
-      <mat-list-item routerLink="/user" routerLinkActive="active"><mat-icon class="v-align" fontIcon="verified_user"></mat-icon><span>User</span></mat-list-item>
+      <mat-list-item *ngIf="isUserPageEnabled" routerLink="/user" routerLinkActive="active"><mat-icon class="v-align" fontIcon="verified_user"></mat-icon><span>User</span></mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">

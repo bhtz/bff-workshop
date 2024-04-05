@@ -161,3 +161,69 @@ import proxy from 'express-http-proxy';
 // ...
 server.use('/api', proxy('https://jsonplaceholder.typicode.com'));
 ```
+
+## Feature management
+* BFF expose feature management configuration
+    * Enable / disable flag from config
+    * A/B testing use case
+
+> 💡 Using a config file & API endpoint
+
+**./config/default.json**
+```json
+{
+    "FeatureManagement": {
+        "ShowUserPage": true
+    }
+}
+```
+
+**./server.ts**
+```js
+import config from 'config';
+// ...
+server.get('/features', (req, res) => {
+  let configs = config.get('FeatureManagement') as FeatureFlagResponse;
+  res.json(configs);
+})
+```
+
+**./src/feature-flags.service.ts**
+```js
+@Injectable({ providedIn: 'root' })
+export class FeatureFlagService {
+
+    http = inject(HttpClient);
+    features = signal<Record<string, boolean>>({});
+
+    loadFeatureFlags(): Observable<FeatureFlagResponse> {
+        return this.http.get<FeatureFlagResponse>('/features').pipe(tap((features) => this.features.set(features)));
+    }
+
+    getFeature(feature: FeatureFlagKeys): boolean {
+        return this.features()[feature] ?? false;
+    }
+}
+
+type _FeatureFlagKeys = keyof FeatureFlagResponse;
+export type FeatureFlagKeys = { [K in _FeatureFlagKeys]: K; }[_FeatureFlagKeys]
+
+export type FeatureFlagResponse = {
+    ShowUserPage: boolean;
+}
+```
+
+**./src/app.component.ts**
+```js
+  private featureFlagService = inject(FeatureFlagService);
+
+  ngOnInit(): void {
+    // ...
+    this.featureFlagService.loadFeatureFlags().subscribe(()=> this.isUserPageEnabled = this.featureFlagService.getFeature('ShowUserPage'));
+  }
+```
+
+**./src/app.component.html**
+```html
+  <mat-list-item *ngIf="isUserPageEnabled" routerLink="/user" routerLinkActive="active"><mat-icon class="v-align" fontIcon="verified_user"></mat-icon><span>User</span></mat-list-item>
+```

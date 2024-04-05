@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from './services/oidc.service';
 import { CommonModule } from '@angular/common';
+import { FeatureFlagService } from './services/feature-flags.service';
 
 @Component({
   selector: 'app-root',
@@ -29,16 +30,15 @@ import { CommonModule } from '@angular/common';
 export class AppComponent implements OnInit {
 
   private authService = inject(AuthService);
+  private featureFlagService = inject(FeatureFlagService);
 
-  isAuthenticated: boolean;
+  isAuthenticated: boolean = false;
+  isUserPageEnabled: boolean = false;
   public opened: boolean = true;
-
-  constructor() {
-    this.isAuthenticated = this.authService.isAuthenticated();
-  }
-
+  
   ngOnInit(): void {
-    // this.isAuthenticated = this.authService.isAuthenticated();
+    this.isAuthenticated = this.authService.isAuthenticated();
+    this.featureFlagService.loadFeatureFlags().subscribe(()=> this.isUserPageEnabled = this.featureFlagService.getFeature('ShowUserPage'));
   }
 
   toggle() {

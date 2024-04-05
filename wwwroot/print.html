@@ -318,7 +318,7 @@
 <li>🚫 Auto generated SDK</li>
 <li>🚫 Light / Dark theme</li>
 <li>🚫 I18N</li>
-<li>🚫 Feature management</li>
+<li>✅ Feature management</li>
 </ul>
 <h3 id="nuxt---vue"><a class="header" href="#nuxt---vue">Nuxt - Vue</a></h3>
 <ul>
@@ -965,6 +965,67 @@ export class AuthService {
 <pre><code class="language-js">import proxy from 'express-http-proxy';
 // ...
 server.use('/api', proxy('https://jsonplaceholder.typicode.com'));
+</code></pre>
+<h2 id="feature-management-2"><a class="header" href="#feature-management-2">Feature management</a></h2>
+<ul>
+<li>BFF expose feature management configuration
+<ul>
+<li>Enable / disable flag from config</li>
+<li>A/B testing use case</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 Using a config file &amp; API endpoint</p>
+</blockquote>
+<p><strong>./config/default.json</strong></p>
+<pre><code class="language-json">{
+    &quot;FeatureManagement&quot;: {
+        &quot;ShowUserPage&quot;: true
+    }
+}
+</code></pre>
+<p><strong>./server.ts</strong></p>
+<pre><code class="language-js">import config from 'config';
+// ...
+server.get('/features', (req, res) =&gt; {
+  let configs = config.get('FeatureManagement') as FeatureFlagResponse;
+  res.json(configs);
+})
+</code></pre>
+<p><strong>./src/feature-flags.service.ts</strong></p>
+<pre><code class="language-js">@Injectable({ providedIn: 'root' })
+export class FeatureFlagService {
+
+    http = inject(HttpClient);
+    features = signal&lt;Record&lt;string, boolean&gt;&gt;({});
+
+    loadFeatureFlags(): Observable&lt;FeatureFlagResponse&gt; {
+        return this.http.get&lt;FeatureFlagResponse&gt;('/features').pipe(tap((features) =&gt; this.features.set(features)));
+    }
+
+    getFeature(feature: FeatureFlagKeys): boolean {
+        return this.features()[feature] ?? false;
+    }
+}
+
+type _FeatureFlagKeys = keyof FeatureFlagResponse;
+export type FeatureFlagKeys = { [K in _FeatureFlagKeys]: K; }[_FeatureFlagKeys]
+
+export type FeatureFlagResponse = {
+    ShowUserPage: boolean;
+}
+</code></pre>
+<p><strong>./src/app.component.ts</strong></p>
+<pre><code class="language-js">  private featureFlagService = inject(FeatureFlagService);
+
+  ngOnInit(): void {
+    // ...
+    this.featureFlagService.loadFeatureFlags().subscribe(()=&gt; this.isUserPageEnabled = this.featureFlagService.getFeature('ShowUserPage'));
+  }
+</code></pre>
+<p><strong>./src/app.component.html</strong></p>
+<pre><code class="language-html">  &lt;mat-list-item *ngIf=&quot;isUserPageEnabled&quot; routerLink=&quot;/user&quot; routerLinkActive=&quot;active&quot;&gt;&lt;mat-icon class=&quot;v-align&quot; fontIcon=&quot;verified_user&quot;&gt;&lt;/mat-icon&gt;&lt;span&gt;User&lt;/span&gt;&lt;/mat-list-item&gt;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="next"><a class="header" href="#next">Next</a></h1>
 <img src="https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png" width="40">

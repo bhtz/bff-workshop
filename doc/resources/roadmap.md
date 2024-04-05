@@ -24,7 +24,7 @@
 * 🚫 Auto generated SDK
 * 🚫 Light / Dark theme
 * 🚫 I18N
-* 🚫 Feature management
+* ✅ Feature management
 
 ### Nuxt - Vue
 
