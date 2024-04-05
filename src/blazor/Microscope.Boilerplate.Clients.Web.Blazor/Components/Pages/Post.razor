@@ -3,9 +3,8 @@
 @using Microsoft.Extensions.Localization
 @attribute [Authorize]
 @inject HttpClient HttpClient
-@inject PersistentComponentState ApplicationState
 @inject IStringLocalizer<Post> Loc
-@implements IDisposable
+@inherits Microscope.Boilerplate.Clients.Web.Blazor.Components.Shared.InteractiveAutoPersistentPage
 
 <PageTitle>Posts</PageTitle>
 
@@ -43,12 +42,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _subscription = ApplicationState.RegisterOnPersisting(PersistState);
-        var foundInState = ApplicationState.TryTakeFromJson<IEnumerable<PostDto>>("posts", out var posts);
-        
-        _posts = foundInState
-            ? posts
-            : await HttpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/api/todos");
+        _posts = await GetPersistentState(nameof(_posts), async () => 
+            await HttpClient.GetFromJsonAsync<IEnumerable<PostDto>>("/api/todos"));
     }
 
     public class PostDto
@@ -57,16 +52,5 @@ else
         public int UserId { get; set; }
         public string? Title { get; set; }
         public bool Completed { get; set; }
-    }
-    
-    private Task PersistState()
-    {
-        ApplicationState.PersistAsJson("posts", _posts);
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        _subscription.Dispose();
     }
 }

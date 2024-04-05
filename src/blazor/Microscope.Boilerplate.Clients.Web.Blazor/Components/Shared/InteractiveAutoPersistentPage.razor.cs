@@ -9,7 +9,7 @@ public abstract class InteractiveAutoPersistentPage : ComponentBase, IDisposable
     
     private readonly IList<PersistingComponentStateSubscription> _subscriptions = new List<PersistingComponentStateSubscription>();
 
-    protected async Task<T> GetPageState<T>(string key, Func<Task<T?>> addState)
+    protected async Task<T> GetPersistentState<T>(string key, Func<Task<T?>> addState)
     {
         var data = default(T?);
         
