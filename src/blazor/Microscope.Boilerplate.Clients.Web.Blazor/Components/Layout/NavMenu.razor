@@ -2,29 +2,15 @@
 @using Microscope.Boilerplate.Clients.Web.Blazor.Services
 @inject IFeatureManagementService FeatureManagementService;
 @inject IStringLocalizer<NavMenu> Loc
-@inherits Microscope.Boilerplate.Clients.Web.Blazor.Components.Shared.InteractiveAutoPersistentPage
+@using Microscope.Boilerplate.Clients.Web.Blazor.Components.Shared
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@Loc["Home"]</MudNavLink>
     <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">@Loc["Counter"]</MudNavLink>
     <MudNavLink Href="posts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@Loc["Posts"]</MudNavLink>
     <MudNavLink Href="continents" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Web">@Loc["Continents"]</MudNavLink>
-    @if (IsUserPageEnabled)
-    {
+    
+    <FeatureFlag FlagName="ShowUserPage">
         <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">@Loc["User"]</MudNavLink>
-    }
+    </FeatureFlag>
 </MudNavMenu>
-
-@code
-{
-    private bool IsUserPageEnabled { get; set; } = true;
-
-    protected override async Task OnInitializedAsync()
-    {
-        IsUserPageEnabled = await GetPersistentState(nameof(IsUserPageEnabled), async () =>
-        {
-            var features = await FeatureManagementService.GetFeatureManagement();
-            return features != null && features.FirstOrDefault(x => x.Key == "ShowUserPage").Value;
-        });
-    }
-}

@@ -555,15 +555,9 @@ await host.RunAsync();
 }
 </code></pre>
 <p><strong>pages or layout</strong></p>
-<pre><code class="language-c#">@if (IsUserPageEnabled)
-{
+<pre><code class="language-c#">&lt;FeatureFlag FlagName=&quot;ShowUserPage&quot;&gt;
     &lt;MudNavLink Href=&quot;user&quot; Match=&quot;NavLinkMatch.Prefix&quot; Icon=&quot;@Icons.Material.Filled.VerifiedUser&quot;&gt;@Loc[&quot;User&quot;]&lt;/MudNavLink&gt;
-}
-// ...
-private bool IsUserPageEnabled { get; set; }
-// ...
-var features = await FeatureManagementService.GetFeatureManagement();
-IsUserPageEnabled = features.FirstOrDefault(x =&gt; x.Key == &quot;ShowUserPage&quot;).Value;
+&lt;/FeatureFlag&gt;
 </code></pre>
 
                     </main>

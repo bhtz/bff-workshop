@@ -1,6 +1,8 @@
 @page "/posts"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
+@using Microscope.Boilerplate.Clients.Web.Blazor.Components.Shared
+
 @attribute [Authorize]
 @inject HttpClient HttpClient
 @inject IStringLocalizer<Post> Loc
@@ -13,7 +15,8 @@
 
 @if (_posts is null)
 {
-    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="50px" />
+    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="50px" Class="mt-4" />
 }
 else
 {

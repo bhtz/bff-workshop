@@ -394,13 +394,7 @@ public static void MapFeatureManagementEndpoints(this WebApplication app)
 
 **pages or layout**
 ```c#
-@if (IsUserPageEnabled)
-{
+<FeatureFlag FlagName="ShowUserPage">
     <MudNavLink Href="user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.VerifiedUser">@Loc["User"]</MudNavLink>
-}
-// ...
-private bool IsUserPageEnabled { get; set; }
-// ...
-var features = await FeatureManagementService.GetFeatureManagement();
-IsUserPageEnabled = features.FirstOrDefault(x => x.Key == "ShowUserPage").Value;
+</FeatureFlag>
 ```
